@@ -1,43 +1,67 @@
 <h1>Heroes</h1>
 <hr>
 <div class="row animated fadeIn fast">
-    <div class="col-md-12 text-right">
-        <button [routerLink]="['/editar','nuevo']" class="btn btn-outline-primary">Nuevo heroe</button>
-    </div>
+  <div class="col-md-12 text-right">
+    <button [routerLink]="['/editar','nuevo']" class="btn btn-outline-primary">Nuevo heroe</button>
+  </div>
 </div>
 <br>
 <div class="row">
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table animated fadeIn fast">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>#</th>
-                        <th>Heroe</th>
-                        <th>Casa</th>
-                        <th>Bio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let heroeID of heroes | keys ; let i = index">
-                        <td>{{i + 1}}</td>
-                        <td>{{heroes[heroeID].nombre}}</td>
-                        <td>{{heroes[heroeID].casa}}</td>
-                        <td>{{heroes[heroeID].bio}}</td>
-                        <td><i [routerLink]="['/editar', heroeID]" class="fa fa-pencil-square-o fa-2x puntero" aria-hidden="true"></i>
-                        <i (click)="eliminarHeroe(heroeID)" class="fa fa-trash-o fa-2x puntero" aria-hidden="true"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table animated fadeIn fast">
+        <thead class="thead-inverse">
+          <tr>
+            <th>#</th>
+            <th>Heroe</th>
+            <th>Casa</th>
+            <th class="text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let heroeID of heroes | keys ; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{heroes[heroeID].nombre}}</td>
+            <td>{{heroes[heroeID].casa}}</td>
+            <td class="text-right"><i [routerLink]="['/editar', heroeID]" class="fa fa-pencil-square-o fa-2x puntero" aria-hidden="true"></i>
+              <!-- <i (click)="eliminarHeroe(heroeID)" class="fa fa-trash-o fa-2x puntero" aria-hidden="true"></i></td> -->
+              <i (click)="establecerHeroeSeleccionado(heroeID)" class="fa fa-trash-o fa-2x puntero" aria-hidden="true" data-toggle="modal" data-target="#modalEliminarHeroe"></i>
+          </td>
 
-            <div *ngIf="(heroes | keys).length === 0 && !cargando" class="alert alert-info">
-                <strong>No hay</strong> registros que mostrar
-            </div>
-            <div *ngIf="cargando" class="alert alert-warning">
-                <strong>Cargando...</strong>
-            </div>
+          </tr>
 
-        </div>
+        </tbody>
+
+      </table>
+
+      <div *ngIf="(heroes | keys).length === 0 && !cargando" class="alert alert-info">
+        <strong>No hay</strong> registros que mostrar
+      </div>
+      <div *ngIf="cargando" class="alert alert-warning">
+        <strong>Cargando...</strong>
+      </div>
+
     </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEliminarHeroe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar heroe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Realmente deseas eliminar el heroe?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button (click)="eliminarHeroe(heroeSeleccionado)" type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
 </div>

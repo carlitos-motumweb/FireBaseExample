@@ -10,6 +10,7 @@ import {HeroeService} from '../../services/heroe.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    heroeSeleccionado: string;
   heroes: any[] = [];
   cargando = true;
   constructor(private _hSrv: HeroeService) {
@@ -34,6 +35,11 @@ export class HomeComponent implements OnInit {
         delete this.heroes[key];
       }
     });
+  }
+
+  establecerHeroeSeleccionado(key: string) {
+    console.log('heroe seleccionado: ' + key);
+    this.heroeSeleccionado = key;
   }
 
 }
